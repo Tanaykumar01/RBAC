@@ -22,7 +22,10 @@ app.use(express.urlencoded({
 }))
 
 // import routes
+import UserRouter from './routes/user.routes.js'
+
 
 // use routes
+app.use('/api/v1/user', UserRouter);
 
 export {app};
