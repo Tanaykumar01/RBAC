@@ -30,8 +30,41 @@ const registerUser = async (req,res) => {
     }
     catch (error) {
         console.error("error :- ", error);
-        res.status(401).json({message : error.message});
+        res.status(400).json({message : error.message});
     }
 }
 
-export { registerUser };
+const loginUser = async (req,res) => {
+    try {
+        const { username , password } = req.body;
+        if(!username){
+            throw new ApiError(400 , "please provide all the fields");
+        }
+
+        const user = await User.findOne({
+            username
+        })
+        
+        if(!user){
+            throw new ApiError(401 , "Invalid credentials");
+        }
+
+        const isPasswordCorrect = await user.isPasswordCorrect(password);
+
+        if(!isPasswordCorrect){
+            throw new ApiError(401 , "Invalid credentials");
+        }
+
+        const loggedInUser = await User.findById(user._id).select("-password");
+
+        return res.status(200).json(
+            new ApiResponse(200 , loggedInUser , "User logged in successfully")
+        )
+        
+    } catch (error) {
+        console.error("error :- ", error);
+        res.status(400).json({message : error.message});
+    }
+}
+
+export { registerUser , loginUser};
