@@ -304,30 +304,45 @@ Install RBAC using one of the following methods:
 3. Install the project dependencies:
 
 
+**Backend:**
+
+Navigate to the `Backend` directory and install the dependencies using `npm`:
+
 **Using `npm`** &nbsp; [<img align="center" src="https://img.shields.io/badge/npm-CB3837.svg?style={badge_style}&logo=npm&logoColor=white" />](https://www.npmjs.com/)
 
 ```sh
+> cd Backend
 ❯ npm install
 ```
 
 
+**Frontend:**
 
+Navigate to the `Frontend` directory and install the dependencies using `npm`:
 
-### 🤖 Usage
-Run RBAC using the following command:
 **Using `npm`** &nbsp; [<img align="center" src="https://img.shields.io/badge/npm-CB3837.svg?style={badge_style}&logo=npm&logoColor=white" />](https://www.npmjs.com/)
 
 ```sh
-❯ npm start
+> cd frontend
+❯ npm install
 ```
 
 
-### 🧪 Testing
-Run the test suite using the following command:
+### 🤖 Usage
+Run Backend using the following command:
 **Using `npm`** &nbsp; [<img align="center" src="https://img.shields.io/badge/npm-CB3837.svg?style={badge_style}&logo=npm&logoColor=white" />](https://www.npmjs.com/)
 
 ```sh
-❯ npm test
+> cd Backend
+❯ npm run dev
+```
+
+Run frontend using the following command:
+**Using `npm`** &nbsp; [<img align="center" src="https://img.shields.io/badge/npm-CB3837.svg?style={badge_style}&logo=npm&logoColor=white" />](https://www.npmjs.com/)
+
+```sh
+> cd frontend
+❯ npm start
 ```
 
 
