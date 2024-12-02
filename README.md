@@ -35,20 +35,18 @@
 
 ## 📍 Overview
 
-<code>❯ RBAC is a Role-Based Access Control system implemented with a Frontend using React and TailwindCSS, and a Backend built with Node.js, Express, and MongoDB. It provides a secure and scalable mechanism to assign and manage access permissions based on user roles.</code>
+RBAC is a Role-Based Access Control system implemented with a Frontend using React and TailwindCSS, and a Backend built with Node.js, Express, and MongoDB. It provides a secure and scalable mechanism to assign and manage access permissions based on user roles.
 
 ---
 
 ## 👾 Features
 
-<code>❯ 
 	•	User authentication with JWT (JSON Web Tokens).
 	•	Role-based access restrictions for secure resource management.
 	•	Modular and scalable architecture with reusable components.
 	•	API endpoints for role and permission management.
 	•	Clean and interactive UI for user interaction.
 	•	Integration with MongoDB for data persistence.
- </code>
 
 ---
 
