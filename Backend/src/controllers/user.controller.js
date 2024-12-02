@@ -47,7 +47,7 @@ const registerUser = async (req,res) => {
     }
     catch (error) {
         console.error("error :- ", error);
-        res.status(400).json({message : error.message});
+        throw new ApiError(400 , error.message);
     }
 }
 
@@ -91,8 +91,33 @@ const loginUser = async (req,res) => {
         
     } catch (error) {
         console.error("error :- ", error);
-        res.status(400).json({message : error.message});
+        throw new ApiError(400 , error.message);
     }
 }
 
-export { registerUser , loginUser};
+const logoutUser = async (req, res) => {
+    await User.findByIdAndUpdate(req.user._id , 
+        {
+            $unset: {
+                refreshToken: 1 // this removes the field from document
+            }
+        },
+        {
+            new : true
+        }
+    )
+
+    const options = {
+        httpOnly : true,
+        secure : true,
+    }
+
+    return res.status(200)
+    .clearCookie("accessToken" , options)
+    .clearCookie("refreshToken" , options)
+    .json(
+        new ApiResponse(200, {} , "User logged out successfully")
+    )
+}
+
+export { registerUser , loginUser , logoutUser};
