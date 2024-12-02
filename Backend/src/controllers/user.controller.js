@@ -1,6 +1,23 @@
 import { ApiError } from "../utils/ApiError.js";
 import User from "../models/user.model.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
+
+const generateAccessAndRefereshTokens = async (userId) =>{
+    try{
+        const user = await User.findById(userId)
+        const accessToken = await user.generateAccessToken()
+        const refreshToken = await user.generateRefreshToken()
+
+        user.refreshToken = refreshToken;
+        await user.save({validateBeforeSave : false});
+
+        return {accessToken , refreshToken};
+    } catch(error){
+        throw new ApiError(500,"Error while generating tokens");
+    }
+}
+
+
 const registerUser = async (req,res) => {
     try {
         const { username , password , role } = req.body;
@@ -54,11 +71,22 @@ const loginUser = async (req,res) => {
         if(!isPasswordCorrect){
             throw new ApiError(401 , "Invalid credentials");
         }
+        // generate access and refresh tokens
+        const {accessToken , refreshToken} = await generateAccessAndRefereshTokens(user._id);
 
-        const loggedInUser = await User.findById(user._id).select("-password");
+        const options = {
+            httpOnly : true,
+            secure : true
+        }
 
-        return res.status(200).json(
-            new ApiResponse(200 , loggedInUser , "User logged in successfully")
+        const loggedInUser = await User.findById(user._id).select("-password -refreshToken");
+
+        return res.status(200).cookie("refreshToken" , refreshToken , options).cookie("accessToken" , accessToken , options).json(
+            new ApiResponse(200 , {
+                user : loggedInUser,
+                accessToken,
+                refreshToken
+            } , "User logged in successfully")
         )
         
     } catch (error) {
