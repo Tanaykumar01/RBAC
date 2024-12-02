@@ -47,7 +47,9 @@ const registerUser = async (req,res) => {
     }
     catch (error) {
         console.error("error :- ", error);
-        throw new ApiError(400 , error.message);
+        return res.status(error.statusCode || 500).json(
+            new ApiError(error.statusCode || 500 , error.message)
+        )
     }
 }
 
@@ -91,7 +93,9 @@ const loginUser = async (req,res) => {
         
     } catch (error) {
         console.error("error :- ", error);
-        throw new ApiError(400 , error.message);
+        return res.status(error.statusCode || 500).json(
+            new ApiError(error.statusCode || 500 , error.message)
+        )
     }
 }
 
